@@ -1,22 +1,22 @@
 def caesar_cipher(string, shift_factor)
   alphabet_letters_downcase = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z" ]
-  alphabet_letters_upcase = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+  alphabet_letters_upcase = alphabet_letters_downcase.map { |char| char.upcase }
   alphabet_length = alphabet_letters_downcase.length
   output = ""
 
   string.each_char do |char|
-    if char.match?(/[A-Z]/)
+    if alphabet_letters_upcase.include?(char)
       index = (alphabet_letters_upcase.index(char) + shift_factor) % alphabet_length
       # Using the modulo operator to wrap around to the beginning
       # of the array when you reach the end
       char = alphabet_letters_upcase[index] 
-      output << char.upcase
-    elsif char.match?(/[a-z]/)
+      output.concat(char.upcase)
+    elsif alphabet_letters_downcase.include?(char)
       index = (alphabet_letters_downcase.index(char) + shift_factor) % alphabet_length
       char = alphabet_letters_downcase[index] 
-      output << char.downcase
+      output.concat(char.downcase)
     else
-      output << char
+      output.concat(char)
     end
   end
 
